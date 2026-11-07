@@ -22,7 +22,7 @@ footer{text-align:center;padding:25px;color:var(--muted);font-size:13px}
 </style>
 </head>
 <body>
-<header class="top"><div><div class="logo">Shop<span>Nest</span></div><div class="tag">Har Shopping, Ek Jagah</div></div><nav class="actions"><a href="#categories">Categories</a><a href="#products">Products</a><a href="#seller">Sell on ShopNest</a></nav></header>
+<header class="top"><div><div class="logo">Shop<span>Nest</span></div><div class="tag">Har Shopping, Ek Jagah</div></div><label style="font-size:13px">Language / भाषा <select id="language" onchange="setLanguage(this.value)" style="padding:8px;border-radius:8px"><option value="hi">हिन्दी</option><option value="en">English</option><option value="ur">اردو</option><option value="fa">فارسی</option><option value="ar">العربية</option><option value="bn">বাংলা</option><option value="ta">தமிழ்</option><option value="te">తెలుగు</option><option value="mr">मराठी</option><option value="fr">Français</option><option value="es">Español</option></select></label><nav class="actions"><a href="#categories">Categories</a><a href="#products">Products</a><a href="#seller">Sell on ShopNest</a></nav></header>
 <div class="search"><input id="q" placeholder="सामान खोजें… / Search products"><button onclick="searchProducts()">खोजें</button></div>
 <main class="wrap">
 <section class="hero"><div><span class="pill">WELCOME TO SHOPNEST</span><h1>आपकी हर पसंद,<br>अब एक ही जगह।</h1><p>Fashion, electronics, home essentials और बहुत कुछ — खरीदारी का नया ठिकाना।</p><a href="#products"><button class="primary">अभी खरीदारी करें</button></a></div><div class="hero-art" aria-hidden="true">🛍️📦✨</div></section>
@@ -38,6 +38,8 @@ footer{text-align:center;padding:25px;color:var(--muted);font-size:13px}
 <section class="seller" id="seller"><div><h2 style="margin:0">क्या आप दुकानदार हैं?</h2><p>ShopNest पर अपना सामान बेचने की शुरुआत करें।</p></div><button class="primary" onclick="alert('दुकानदार रजिस्ट्रेशन अगले चरण में जोड़ा जाएगा।')">दुकानदार बनें</button></section>
 </main><footer>© 2026 ShopNest. यह शुरुआती डिज़ाइन है — अभी ऑर्डर और पेमेंट चालू नहीं हैं।</footer>
 <script>
+const languageCopy={hi:{search:"सामान खोजें…",button:"खोजें",hero:"आपकी हर पसंद,<br>अब एक ही जगह।",buy:"अभी खरीदारी करें",dir:"ltr"},en:{search:"Search products…",button:"Search",hero:"Everything you love,<br>all in one place.",buy:"Shop now",dir:"ltr"},ur:{search:"مصنوعات تلاش کریں…",button:"تلاش",hero:"آپ کی ہر پسند،<br>اب ایک ہی جگہ۔",buy:"ابھی خریداری کریں",dir:"rtl"},fa:{search:"جستجوی کالا…",button:"جستجو",hero:"هر آنچه دوست دارید،<br>همه در یک‌جا.",buy:"اکنون خرید کنید",dir:"rtl"},ar:{search:"ابحث عن المنتجات…",button:"بحث",hero:"كل ما تحبه،<br>في مكان واحد.",buy:"تسوق الآن",dir:"rtl"}};
+function setLanguage(lang){const c=languageCopy[lang]||languageCopy.en;document.documentElement.dir=c.dir;document.getElementById('q').placeholder=c.search;document.querySelector('.search button').textContent=c.button;document.querySelector('.hero h1').innerHTML=c.hero;document.querySelector('.hero .primary').textContent=c.buy;}
 function searchProducts(){const q=document.getElementById('q').value.trim().toLowerCase();document.querySelectorAll('.product').forEach(p=>p.style.display=p.innerText.toLowerCase().includes(q)?'block':'none');}
 </script>
 </body></html>
