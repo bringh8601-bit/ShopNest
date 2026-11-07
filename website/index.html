@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#172554">
+<title>ShopNest — Har Shopping, Ek Jagah</title>
+<style>
+:root{--navy:#172554;--blue:#2563eb;--orange:#f97316;--ink:#172033;--muted:#64748b;--bg:#f5f7fb}
+*{box-sizing:border-box}body{margin:0;font-family:Arial, sans-serif;background:var(--bg);color:var(--ink)}
+.top{background:var(--navy);color:#fff;padding:12px 5%;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.logo{font-size:25px;font-weight:800;letter-spacing:-1px}.logo span{color:#fb923c}.tag{font-size:12px;color:#dbeafe}
+.actions{display:flex;gap:10px;align-items:center}.actions a{color:#fff;text-decoration:none;font-size:14px}
+.search{display:flex;gap:8px;padding:16px 5%;background:#fff}.search input{flex:1;min-width:0;padding:13px;border:1px solid #cbd5e1;border-radius:10px;font-size:15px}.search button,.primary{border:0;border-radius:10px;background:var(--orange);color:white;padding:13px 18px;font-weight:700}
+.wrap{max-width:1150px;margin:auto;padding:22px 5%}
+.hero{background:linear-gradient(120deg,#172554,#1d4ed8);border-radius:20px;color:white;padding:32px;display:grid;grid-template-columns:1.4fr 1fr;gap:20px;align-items:center;overflow:hidden}
+.hero h1{font-size:clamp(28px,5vw,46px);margin:0 0 12px}.hero p{color:#dbeafe;line-height:1.6}.hero .pill{display:inline-block;background:#ffffff20;border:1px solid #ffffff55;padding:7px 12px;border-radius:30px;font-size:12px}.hero-art{font-size:90px;text-align:center}
+h2{font-size:22px;margin:28px 0 14px}.cats{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}.cat{background:#fff;border-radius:14px;padding:16px 8px;text-align:center;box-shadow:0 3px 14px #0f172a08}.cat b{display:block;font-size:27px;margin-bottom:8px}.cat span{font-size:13px}
+.products{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.product{background:#fff;border-radius:15px;overflow:hidden;box-shadow:0 3px 14px #0f172a08}.photo{height:130px;background:#e8eefc;display:grid;place-items:center;font-size:52px}.details{padding:13px}.details strong{display:block;font-size:14px;min-height:34px}.price{font-weight:800;margin:8px 0;color:#0f172a}.small{font-size:12px;color:var(--muted)}
+.seller{margin-top:26px;background:#fff7ed;border:1px solid #fed7aa;border-radius:16px;padding:20px;display:flex;justify-content:space-between;align-items:center;gap:14px}.seller p{margin:6px 0;color:#7c2d12;font-size:14px}
+footer{text-align:center;padding:25px;color:var(--muted);font-size:13px}
+@media(max-width:700px){.hero{grid-template-columns:1fr;padding:24px}.hero-art{font-size:65px}.cats{grid-template-columns:repeat(3,1fr)}.products{grid-template-columns:repeat(2,1fr)}.seller{align-items:flex-start;flex-direction:column}.actions{width:100%;justify-content:space-between}}
+</style>
+</head>
+<body>
+<header class="top"><div><div class="logo">Shop<span>Nest</span></div><div class="tag">Har Shopping, Ek Jagah</div></div><nav class="actions"><a href="#categories">Categories</a><a href="#products">Products</a><a href="#seller">Sell on ShopNest</a></nav></header>
+<div class="search"><input id="q" placeholder="सामान खोजें… / Search products"><button onclick="searchProducts()">खोजें</button></div>
+<main class="wrap">
+<section class="hero"><div><span class="pill">WELCOME TO SHOPNEST</span><h1>आपकी हर पसंद,<br>अब एक ही जगह।</h1><p>Fashion, electronics, home essentials और बहुत कुछ — खरीदारी का नया ठिकाना।</p><a href="#products"><button class="primary">अभी खरीदारी करें</button></a></div><div class="hero-art" aria-hidden="true">🛍️📦✨</div></section>
+<section id="categories"><h2>लोकप्रिय कैटेगरी / Categories</h2><div class="cats">
+<div class="cat"><b>📱</b><span>मोबाइल</span></div><div class="cat"><b>👗</b><span>फैशन</span></div><div class="cat"><b>🏠</b><span>घर और किचन</span></div><div class="cat"><b>💻</b><span>इलेक्ट्रॉनिक्स</span></div><div class="cat"><b>💄</b><span>ब्यूटी</span></div><div class="cat"><b>⚽</b><span>खेल-कूद</span></div>
+</div></section>
+<section id="products"><h2>चुने हुए प्रोडक्ट / Featured Products</h2><div class="products" id="productList">
+<article class="product"><div class="photo">🎧</div><div class="details"><strong>Wireless Headphones</strong><div class="price">₹1,299</div><div class="small">नमूना प्रोडक्ट</div></div></article>
+<article class="product"><div class="photo">⌚</div><div class="details"><strong>Smart Watch</strong><div class="price">₹1,899</div><div class="small">नमूना प्रोडक्ट</div></div></article>
+<article class="product"><div class="photo">👟</div><div class="details"><strong>Casual Sneakers</strong><div class="price">₹999</div><div class="small">नमूना प्रोडक्ट</div></div></article>
+<article class="product"><div class="photo">🎒</div><div class="details"><strong>Everyday Backpack</strong><div class="price">₹799</div><div class="small">नमूना प्रोडक्ट</div></div></article>
+</div></section>
+<section class="seller" id="seller"><div><h2 style="margin:0">क्या आप दुकानदार हैं?</h2><p>ShopNest पर अपना सामान बेचने की शुरुआत करें।</p></div><button class="primary" onclick="alert('दुकानदार रजिस्ट्रेशन अगले चरण में जोड़ा जाएगा।')">दुकानदार बनें</button></section>
+</main><footer>© 2026 ShopNest. यह शुरुआती डिज़ाइन है — अभी ऑर्डर और पेमेंट चालू नहीं हैं।</footer>
+<script>
+function searchProducts(){const q=document.getElementById('q').value.trim().toLowerCase();document.querySelectorAll('.product').forEach(p=>p.style.display=p.innerText.toLowerCase().includes(q)?'block':'none');}
+</script>
+</body></html>
