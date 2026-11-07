@@ -1,4 +1,4 @@
-package in.shopnest.app
+package `in`.shopnest.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
