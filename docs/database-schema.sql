@@ -62,8 +62,41 @@ alter table public.addresses enable row level security;
 alter table public.orders enable row level security;
 alter table public.order_items enable row level security;
 create policy "profiles_select_own" on public.profiles for select to authenticated using (id=auth.uid());
-create policy "profiles_update_own" on public.profiles for update to authenticated using (id=auth.uid())
- with check (id=auth.uid() and account_role=(select p.account_role from public.profiles p where p.id=auth.uid()));
+-- SECURITY DEFINER helper avoids recursive profile-table RLS checks.
+create or replace function public.current_profile_role()
+returns text language sql stable security definer
+set search_path = ''
+as $
+  select p.account_role from public.profiles p where p.id = (select auth.uid())
+$;
+revoke all on function public.current_profile_role() from public;
+grant execute on function public.current_profile_role() to authenticated;
+
+create policy "profiles_update_own" on public.profiles for update to authenticated
+ using (id=auth.uid())
+ with check (id=auth.uid() and account_role=public.current_profile_role());
+
+-- Automatically create a basic buyer profile when a new Auth user signs up.
+create or replace function public.handle_new_auth_user()
+returns trigger language plpgsql security definer
+set search_path = ''
+as $
+begin
+  insert into public.profiles (id, full_name, phone)
+  values (
+    new.id,
+    coalesce(new.raw_user_meta_data ->> 'full_name', ''),
+    coalesce(new.phone, '')
+  )
+  on conflict (id) do nothing;
+  return new;
+end;
+$;
+
+drop trigger if exists on_auth_user_created_shopnest on auth.users;
+create trigger on_auth_user_created_shopnest
+  after insert on auth.users
+  for each row execute procedure public.handle_new_auth_user();
 create policy "categories_read_active" on public.categories for select to anon,authenticated using (is_active=true);
 create policy "products_read_active" on public.products for select to anon,authenticated using (status='active');
 create policy "stores_owner_read" on public.stores for select to authenticated using (owner_id=auth.uid());
@@ -81,5 +114,5 @@ create policy "addresses_owner_all" on public.addresses for all to authenticated
 create policy "orders_buyer_read" on public.orders for select to authenticated using (buyer_id=auth.uid());
 create policy "order_items_buyer_read" on public.order_items for select to authenticated using
  (exists(select 1 from public.orders o where o.id=order_id and o.buyer_id=auth.uid()));
--- Follow-up backend work: secure auth profile trigger, server-side checkout with price/stock validation,
+-- Follow-up backend work: server-side checkout with price/stock validation,
 -- admin-only policies via trusted claims, payment webhook verification, shipping/refunds, audit logs and tests.
