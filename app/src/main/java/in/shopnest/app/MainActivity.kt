@@ -38,16 +38,16 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-private data class ShopProduct(val name: String, val price: String, val tag: String, val emoji: String)
+private data class ShopProduct(val name: String, val price: String, val tag: String, val emoji: String, val category: String)
 
 @Composable
 fun ShopNestApp() {
     val categories = listOf("सभी", "मोबाइल", "फैशन", "जूते", "ग्रोसरी", "इलेक्ट्रॉनिक्स", "होम", "ब्यूटी", "खिलौने")
     val products = listOf(
-        ShopProduct("Premium Wireless Headphones", "₹1,499", "बेस्टसेलर", "🎧"),
-        ShopProduct("Classic Everyday Sneakers", "₹1,199", "नई पसंद", "👟"),
-        ShopProduct("Smart Fitness Watch", "₹2,499", "टॉप डील", "⌚"),
-        ShopProduct("Elegant Home Decor Set", "₹899", "लोकप्रिय", "🏡")
+        ShopProduct("Premium Wireless Headphones", "₹1,499", "बेस्टसेलर", "🎧", "इलेक्ट्रॉनिक्स"),
+        ShopProduct("Classic Everyday Sneakers", "₹1,199", "नई पसंद", "👟", "जूते"),
+        ShopProduct("Smart Fitness Watch", "₹2,499", "टॉप डील", "⌚", "मोबाइल"),
+        ShopProduct("Elegant Home Decor Set", "₹899", "लोकप्रिय", "🏡", "होम")
     )
     var selectedCategory by remember { mutableStateOf("सभी") }
     var query by remember { mutableStateOf("") }
@@ -132,7 +132,7 @@ fun ShopNestApp() {
                     }
                 }
                 item { Spacer(Modifier.height(18.dp)); SectionTitle("आज की खास पसंद", "और देखें") }
-                items(products.filter { query.isBlank() || it.name.contains(query, ignoreCase = true) }) { product ->
+                items(products.filter { (selectedCategory == "सभी" || it.category == selectedCategory) && (query.isBlank() || it.name.contains(query, ignoreCase = true)) }) { product ->
                     ProductRow(product = product, onAdd = { cartCount++ })
                 }
                 item {
